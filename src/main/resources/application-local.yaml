@@ -1,0 +1,29 @@
+server:
+  port: 8005
+
+#    url: jdbc:mysql://product-service-mysqldb-1:3306/products
+#    username: root
+#    password: mystore
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/products
+    username: root
+    password: mystore
+  #    initialization-mode: always
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    #        temp:
+    #          use_jdbc_metadata_defaults: false
+    show-sql: false
+#  sql:
+#    init:
+#      mode: always
+
+logging:
+  level:
+    org:
+      springframework: off

@@ -1,0 +1,27 @@
+version: "3"
+services:
+  mysqldb:
+    image: "mysql:latest"
+    ports:
+      - "3306:3306"
+    networks:
+      - products
+    environment:
+      MYSQL_DATABASE: products
+      MYSQL_ROOT_PASSWORD: mystore
+  product4:
+    build: .
+#    restart: always
+    ports:
+      - "8005:8005"
+    networks:
+      - products
+    environment:
+      MYSQL_DATABASE: mystore-mysqldb-1
+      MYSQL_USER: root
+      MYSQL_PASSWORD: mystore
+    depends_on:
+      - mysqldb
+
+networks:
+  products:
