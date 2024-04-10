@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 public class CategoryDto implements Serializable {
+    private int id;
     private String name;
     private String code;
     private String description;

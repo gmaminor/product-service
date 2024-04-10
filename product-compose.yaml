@@ -9,15 +9,19 @@ services:
     environment:
       MYSQL_DATABASE: products
       MYSQL_ROOT_PASSWORD: mystore
-  product4:
+    volumes:
+      - C:/Users/user/Desktop/product:/var/lib/mysql/
+  product5:
     build: .
-#    restart: always
+#    image: "mystore-product5:latest"
+    restart: always
     ports:
-      - "8005:8005"
+      - "8006:8006"
     networks:
       - products
     environment:
-      MYSQL_DATABASE: mystore-mysqldb-1
+      MYSQL_HOST: mystore-mysqldb-1
+#      MYSQL_HOST: mystore-mysqldb-1......when --project-name mystore  is added to docker-compose
       MYSQL_USER: root
       MYSQL_PASSWORD: mystore
     depends_on:

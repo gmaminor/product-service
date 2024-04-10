@@ -2,6 +2,7 @@ package com.mystore.productservice.services;
 
 import com.mystore.productservice.configs.ModelMapperConfig;
 import com.mystore.productservice.dtos.ProductDto;
+import com.mystore.productservice.dtos.ResponseDto;
 import com.mystore.productservice.models.Category;
 import com.mystore.productservice.models.Product;
 import com.mystore.productservice.repositories.CategoryRepository;
@@ -19,14 +20,15 @@ public class ProductService {
     private final ModelMapperConfig modelMapper;
     private final CategoryRepository categoryRepository;
 
-    public ResponseEntity<ProductDto> addProduct(ProductDto productDto) {
+    public ResponseEntity<ResponseDto<ProductDto>> addProduct(ProductDto productDto) {
         Product product = ModelMapperConfig.modelMapper().map(productDto, Product.class);
         Category category = categoryRepository.findByCode(productDto.getCategoryCode())
                 .orElseThrow(()-> new RuntimeException("Category Not Found"));//Todo use custom exception
         product.setCategory(category);
 
         Product savedProduct = productRepository.save(product);
-        return ResponseEntity.ok(ModelMapperConfig.modelMapper().map(savedProduct, ProductDto.class));
+        productDto = ModelMapperConfig.modelMapper().map(savedProduct, ProductDto.class);
+        return ResponseEntity.ok(new ResponseDto<>("Successful","00",productDto));
 //        change to create 201
     }
     public List<ProductDto> getAllProducts(){
